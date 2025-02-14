@@ -200,6 +200,20 @@
             }
         }
 
+        static void RandomPoints(ref char[,] Field)
+        {
+            Random rand = new Random();
+            int live = 0;
+            for (int x = 0; x < Field.GetLength(0); x++)
+            {
+                for (int y = 0; y < Field.GetLength(1); y++)
+                {
+                    live = rand.Next(0,2);
+                    if (live == 0) Field[x, y] = ' '; else Field[x, y] = '@';
+                }
+            }
+        }
+
         static void Main(string[] args)
         {
             char[,] Field = new char[0, 0]; // Создание поля для игры
@@ -215,7 +229,7 @@
                 {
                     Console.Clear();
                     Console.WriteLine("Меню игры <Жизнь>\nВыберите действие:");
-                    Console.WriteLine("1.Задать размеры поля\n2.Отрегулировать точки\n3.Запустить симуляцию\n4.Закрыть программу");
+                    Console.WriteLine("1.Задать размеры поля\n2.Отрегулировать точки\n3.Запустить симуляцию\n4.Случайно сгенерировать клетки\n5.Закрыть программу");
                     if (Field.GetLength(0) > 0 && Field.GetLength(1) > 0)
                     {
                         PrintField(Field);
@@ -261,6 +275,12 @@
                             break;
                         }
                     case 4:
+                        {
+                            if (BoundsDo) { RandomPoints(ref Field); }
+                            else { exeption = new Exception("Сначала задайте размеры массива"); }
+                            break;
+                        }
+                    case 5:
                         {
                             Environment.Exit(0);
                             break;
